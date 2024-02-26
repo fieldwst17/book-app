@@ -1,72 +1,39 @@
 import React from "react";
 import Link from "next/link";
 
-export default function BookList() {
+const showBook = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/api/books", {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch book");
+    }
+    return res.json();
+  } catch (error) {
+    console.log("Error loading topics:", error);
+  }
+};
+
+export default async function BookList() {
+  const { books } = await showBook();
   return (
-    <div className="mt-20">
-      <h1 className="text-3xl font-bold mb-4">Book List</h1>
-      <div className="flex flex-wrap justify-between">
-        <table className="w-full text-sm">
-          <tbody>
-            <tr className="grid grid-cols-5 gap-4">
-              <td>
-                <Link href={"/AddBook"}>
-                  <div className="p-4 bg-white border rounded-lg shadow-md">
-                    <p className="text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
-                      Think Again
-                    </p>
-                    <p className="text-gray-500">By Adam Grant</p>
-                    <p className="text-gray-500">Published: January 12, 2021</p>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link href={"/AddBook"}>
-                  <div className="p-4 bg-white border rounded-lg shadow-md">
-                    <p className="text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
-                      Atomic Habits
-                    </p>
-                    <p className="text-gray-500">By James Clear</p>
-                    <p className="text-gray-500">Published: October 16, 2018</p>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link href={"/AddBook"}>
-                  <div className="p-4 bg-white border rounded-lg shadow-md">
-                    <p className="text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
-                      Emotional First Aid
-                    </p>
-                    <p className="text-gray-500">By Guy Winch</p>
-                    <p className="text-gray-500">Published: July 10, 2014</p>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link href={"/AddBook"}>
-                  <div className="p-4 bg-white border rounded-lg shadow-md">
-                    <p className="text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
-                      Four Thousand Week
-                    </p>
-                    <p className="text-gray-500">By Oliver Burkeman</p>
-                    <p className="text-gray-500">Published: June 29, 2021</p>
-                  </div>
-                </Link>
-              </td>
-              <td>
-                <Link href={"/AddBook"}>
-                  <div className="p-4 bg-white border rounded-lg shadow-md">
-                    <p className="text-blue-600 hover:text-blue-800 cursor-pointer mb-2">
-                      INTO THE MAGIC SHOP
-                    </p>
-                    <p className="text-gray-500">By James R. Doty</p>
-                    <p className="text-gray-500">Published: May 5, 2016</p>
-                  </div>
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div>
+      <div className="container-main">
+        <h1 className="heading text-5xl font-bold text-center pb-4 mb-4 text-sky-400 drop-shadow-lg">Book List</h1>
+        <div className="box-container grid">
+          {/* Content */}
+          {books.map((item, index) => (
+            <div key={index} className="box">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <p>{item.author}</p>
+              <button>Delete</button>
+              <Link href={'/EditBook/id'}>Edit</Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

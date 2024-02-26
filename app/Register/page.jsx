@@ -7,6 +7,7 @@ export default function Register() {
     const signUpComplete =()=>{
         return (
             alert('ลงทะเบียนเสร็จสิ้น'),
+            router.refresh(),
             router.push('/Login')    
         ) 
     }

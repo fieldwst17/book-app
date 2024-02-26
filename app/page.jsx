@@ -4,7 +4,7 @@ import BookList from "../components/BookList";
 export default function Page() {
   return (
     <div>
-      <div className="text-2xl text-center text-red-600 vh">
+      <div className="font-sans md:font-serif text-2xl">
         <BookList />
       </div>
     </div>
