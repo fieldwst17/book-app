@@ -2,14 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    transition: 0.3s linear;
-}
-
-.container-main{
-    padding: 15px 9%;
-    padding-bottom: 100px;
-}
 
