@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -11,29 +11,33 @@ export default function AddBook() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
+    const confirmed = window.confirm("ต้องการบันทึกข้อมูลหรือไม่");
     e.preventDefault();
-
     if (!title || !description || !author) {
-      alert("กรอกข้อมูลลงในช่องว่าง");
+      alert("กรอกข้อมูลให้ครบถ้วน");
       return;
     }
 
-    try {
-      const res = await fetch("http://localhost:3000/api/books", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ title, description, author }),
-      });
+    if (confirmed) {
+      try {
+        const res = await fetch("http://localhost:3000/api/books", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ title, description, author }),
+        });
 
-      if (res.ok) {
-        alert(`${successMessage}`)
-        router.push("/");
-        router.refresh();
+        if (res.ok) {
+          alert(`${successMessage}`);
+          router.push("/");
+          router.refresh();
+        } else {
+          throw new Error("Failed to Create")
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -70,8 +74,8 @@ export default function AddBook() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-        >
+          className="text-grey-400 hover:text-red-400"
+          >
           เพิ่มหัวข้อ
         </button>
       </form>

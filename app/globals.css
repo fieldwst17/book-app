@@ -5,9 +5,7 @@
 *{
     margin: 0; padding: 0;
     box-sizing: border-box;
-    text-decoration: none;
-    text-transform: capitalize;
-    transition: 2s linear;
+    transition: 0.3s linear;
 }
 
 .container-main{
